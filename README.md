@@ -2,6 +2,12 @@
 
 A Next.js 14 application that automates content generation and posting to Twitter using AI-powered orchestration and prompt chaining.
 
+## Demo Video
+
+<video src="./automated-content-posting agent.mp4" controls width="600">
+  Your browser does not support the video tag.
+</video>
+
 ## Features
 - Automated content creation using AI (Google Gemini, Groq, HuggingFace, Brave, Serper)
 - Twitter API integration for posting tweets
@@ -47,7 +53,7 @@ This project uses a chain of specialized AI agents and external APIs to automate
 
 ## Environment Variables
 See `.env.example` for all required keys:
-- `GROQ_API_KEY`, `GEMINI_API_KEY`, `SERPER_API_KEY`, `HF_TOKEN`, `BRAVE_API_KEY`
+- `GROQ_API_KEY`, `SERPER_API_KEY`, `BRAVE_API_KEY`
 - `TWITTER_API_KEY`, `TWITTER_API_SECRET`, `TWITTER_ACCESS_TOKEN`, `TWITTER_ACCESS_TOKEN_SECRET`
 
 ## Project Structure

@@ -1,7 +1,6 @@
 // lib/agents.ts
 // NOTE: I am providing the full, complete code for this file.
 
-import { GoogleGenerativeAI, Part } from '@google/generative-ai';
 import { TwitterApi } from 'twitter-api-v2';
 import fs from 'fs/promises';
 import path from 'path';
@@ -68,14 +67,8 @@ export class TrendFetcherAgent {
   }
 }
 
-// ContentCreatorAgent (MODIFIED)
+// ContentCreatorAgent (Groq Only)
 export class ContentCreatorAgent {
-  private genAI: GoogleGenerativeAI;
-
-  constructor() {
-    this.genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-  }
-
   // [NEW] Method to automatically select the best theme
   async selectBestTheme(trendsSummary: string): Promise<string> {
     const themeSelectionPrompt = `From the trend analysis below, pick the single most **viral-worthy**, emotionally resonant theme or angle for a short-form social media post. Focus on what would stop someone from scrolling. Return only that **short, actionable theme** — no explanations, formatting, or quotes.
@@ -117,15 +110,15 @@ The single best viral theme is:`;
   }
 
   async run(idea: string, trendsSummary: string, platform: string, style: string = 'default'): Promise<string> {
-    const model = this.genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
     const prompt = this.getPromptForPlatform(platform, idea, trendsSummary, style);
-    const result = await model.generateContent(prompt);
-    let text = result.response.text();
+    const result = await callGroqApi(
+      [{ role: 'user', content: prompt }],
+      'llama-3.3-70b-versatile'
+    );
+    let text = result;
     // [IMPROVED] For longform, show as a single, well-formatted tweet (not a thread)
     if (style === 'longform') {
-      // Remove thread markers and join all parts into a single tweet
       text = text.replace(/\*\*\(Tweet \d+\/\d+\)\*\*/g, '').replace(/\n+/g, ' ').replace(/\s+/g, ' ').trim();
-      // Optionally, truncate to 500 characters for a long tweet (Twitter X limit is 280, but for other platforms you may want longer)
       if (text.length > 500) text = text.slice(0, 497) + '...';
     }
     return text;
