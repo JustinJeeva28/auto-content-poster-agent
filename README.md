@@ -2,12 +2,6 @@
 
 A Next.js 14 application that automates content generation and posting to Twitter using AI-powered orchestration and prompt chaining.
 
-## Demo Video
-
-<video src="./automated-content-posting agent.mp4" controls width="600">
-  Your browser does not support the video tag.
-</video>
-
 ## Features
 - Automated content creation using AI (Google Gemini, Groq, HuggingFace, Brave, Serper)
 - Twitter API integration for posting tweets
@@ -106,5 +100,9 @@ public/
 - `npm run build` — Build for production
 - `npm start` — Start production server
 - `npm run lint` — Lint code
+
+## Demo Video
+Watch locally:
+[Watch the Chat Demo](public/automated-content-posting%20agent.mp4)
 
 
